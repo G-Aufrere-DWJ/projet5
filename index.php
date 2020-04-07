@@ -7,7 +7,7 @@ try {
         home();
     }
     else { //si il il n'y a pas d'action
-        afficheHome();
+        afficheHomel();
     }
     } // fin du try
 catch(Exception $e) { // S'il y a eu une erreur, alors...
