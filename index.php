@@ -3,11 +3,13 @@ require('controller/frontend.php');
 
 try {
     session_start();
-    if ($_GET['action'] == 'home') {
-        home();
-    }
+    if (isset($_GET['action'])) { 
+        if ($_GET['action'] == 'home') {
+            afficheHome();
+        }
+}
     else { //si il il n'y a pas d'action
-        afficheHomel();
+        afficheHome();
     }
     } // fin du try
 catch(Exception $e) { // S'il y a eu une erreur, alors...
