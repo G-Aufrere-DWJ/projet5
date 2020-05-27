@@ -1,0 +1,9 @@
+{
+    "name": "guillaume/projet5",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Guillaume\\": "projet5"
+        }
+    }
+}
