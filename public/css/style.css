@@ -27,25 +27,14 @@ body {
     font-family: 'orkneyregular', 'time new roman', 'arial', 'sans-serif';
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: 'orkneybold';
-}
+
 
 #mainNav {
     position: relative;
     background-color: #8bc34a !important;
 }
 
-*,
-*:before,
-*:after {
-    box-sizing: inherit;
-}
+
 
 .text-center {
     text-align: center;
@@ -377,6 +366,10 @@ footer div {
     max-width: 370px;
 }
 
+.modal-header button:hover {
+    background-color: #bb8527;
+}
+
 .modal-title {
     width: 300px;
     height: 50px;
@@ -446,4 +439,118 @@ footer div {
     color: #293251;
     text-align: center;
     font-size: 0.8em;
+}
+
+#news {
+    margin: auto;
+}
+
+hr.limite_post {
+    overflow: visible;
+    /* For IE */
+    padding: 0;
+    border: none;
+    border-top: medium double #333;
+    color: #333;
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+hr.limite_post:after {
+    content: '§';
+    display: inline-block;
+    position: relative;
+    top: -0.7em;
+    font-size: 1.5em;
+    padding: 0 0.25em;
+    background: white;
+}
+
+.btn {
+    font-size: 12px;
+    border-radius: 11px;
+    padding: 11px 20px;
+    background-color: #bb8527;
+    opacity: 0.8;
+    border: none;
+}
+
+.btn:hover {
+    background-color: #bb8527;
+    opacity: 1;
+}
+
+#whole_chapter {
+    background-color: #475151;
+    clip-path: polygon(0 0, 100% 20px, 100% 100%, 0% 100%);
+}
+
+#display_comments {
+    margin: auto;
+}
+
+#change_avatar img {
+    width: 250px;
+    height: 250px;
+    border-radius: 140px;
+}
+
+#posts_comments img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+}
+
+#container_gestion img {
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    margin-bottom: 4%;
+}
+
+#container_gestion form {
+    display: flex;
+    flex-direction: column;
+}
+
+#pagination {
+    position: relative;
+    margin-bottom: 0%;
+}
+
+#carouselExampleControls img {
+    max-height: 600px;
+}
+
+#transition_accueil img {
+    width: 100px;
+}
+
+#content {
+    height: 400px;
+}
+
+#btn_add_post button {
+    background-color: seagreen;
+}
+
+#btn_success_delete {
+    background-color: rgba(221, 16, 16, 0.726);
+}
+
+#btn_success_modify {
+    background-color: seagreen;
+}
+
+#btn_delete_comment {
+    background-color: rgba(221, 16, 16, 0.726);
+}
+
+#btn_signal_comment {
+    background-color: seagreen;
+}
+
+#red_btn_comments {
+    background-color: rgba(221, 16, 16, 0.726);
+    ;
 }

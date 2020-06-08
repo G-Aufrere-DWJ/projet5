@@ -14,9 +14,9 @@
                             <p class="text-black"><?= nl2br(htmlspecialchars($comment['comment'])) ?></p>
 
                             <?php if (!empty($_SESSION['id']) && ($_SESSION['role'] == 0 )) { ?>
-                                <a href="index.php?action=deleteComment&id=<?= ($comment['id'])?>&post_id=<?= $comment['post_id']?>" class="btn btn-danger">Supprimer le commentaire</a>
+                                <a href="index.php?action=deleteComment&id=<?= ($comment['id'])?>&post_id=<?= $comment['post_id']?>" class="btn btn-danger" id="btn_delete_comment">Supprimer le commentaire</a>
                             <?php } ?>
-                            <a href="index.php?action=takeOffComment&id=<?= ($comment['id'])?>&post_id=<?= $comment['post_id']?>" class="btn btn-success">Retirer le signalement</a>
+                            <a href="index.php?action=takeOffComment&id=<?= ($comment['id'])?>&post_id=<?= $comment['post_id']?>" class="btn btn-success" id="btn_signal_comment">Retirer le signalement</a>
                         <?php } ?>
                         </div>
                     </div>

@@ -16,8 +16,8 @@
                 </select>
                 <input type="text" id="content" name="content" class="form-control" />
             </div>
-            <div class="form-group pb-5">
-                <button type="submit" class="btn btn-primary">Ajouter</button>
+            <div class="form-group pb-5" id="btn_add_post">
+                <button type="submit" class="btn btn-success">Ajouter</button>
             </div>
         </form>
     </div>

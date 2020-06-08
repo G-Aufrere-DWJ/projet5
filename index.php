@@ -4,7 +4,7 @@ require('controller/frontend.php');
 try {
     session_start();
     if (isset($_GET['action'])) { 
-        if ($_GET['action'] == 'home') {
+        if ($_GET['action'] == 'home') { 
             afficheHome();
         }
         elseif ($_GET['action'] == 'registration') {

@@ -8,6 +8,9 @@ use Guillaume\model\CommentManager;
 
 function afficheHome()
 {
+    $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
+
     require('view/frontend/homeView.php');
 }
 
@@ -15,20 +18,18 @@ function addUser($pseudo, $password)
 {
     $userManager = new UserManager();
 
-    if ($userManager->checkPseudo($pseudo))
-    {
+    if ($userManager->checkPseudo($pseudo)):
         $success = $userManager->insertUser($pseudo, $password);
-        if ($success == false) {
+        if ($success == false):
             throw new Exception ('Erreur');
-        }
-        else {
+        else:
             header('Location: index.php?action=home');
-        }
-    }
-    else {
-        throw new Exception ('Ce pseudo est déjà utilisé, veuillez en choisir un nouveau');
-    }
+        endif;
+    else:
+        throw new Exception('Ce pseudo est déjà utilisé, veuillez en choisir un nouveau');
+    endif;
 }
+
 
 function afficheInscription()
 {
@@ -40,23 +41,22 @@ function connection($pseudo, $password)
     $userManager = new UserManager();
     $req = $userManager->userExists($pseudo);
     
-    if ($req === false) {
+    if ($req === false) :
         throw new Exception('Mauvais identifiant ou mot de passe 2');
-    }
-    else {
+    
+    else :
         $user = $req->fetch();
         $correctPassword = password_verify($password, $user['password']);
-
-            if ($correctPassword) {
+    endif;
+            if ($correctPassword) :
             $_SESSION['id'] = $user['id'];
             $_SESSION['pseudo'] = $user['pseudo'];
             $_SESSION['role'] = $user['role'];
             header('Location: index.php?action=home');
-        }
-        else {
+        
+        else :
             throw new Exception('Mauvais identifiant ou mot de passe');
-        }
-    }
+        endif;
 }
 
 function afficheConnexion()
@@ -81,12 +81,12 @@ function newPost($title, $content, $id_rubrique)
     $postManager = new PostManager();
     $affectedLines = $postManager->addPost($title, $content, $id_rubrique);
 
-    if ($affectedLines == false) {
+    if ($affectedLines == false) :
         throw new Exception('Impossible d\'ajouter l\'article !');
-    }
-    else {
+    
+    else :
         header('Location: index.php?action=admin');
-    }
+    endif;
 }
 
 function writeArticle()
@@ -94,21 +94,28 @@ function writeArticle()
     require('view/frontend/newPostView.php');
 }
 
-function listPosts()
-{
-    $postManager = new PostManager();
-    $posts = $postManager->getPosts($_GET['id_rubrique']);
-    
-    require('view/frontend/listPostView.php');
-}
-
 function post()
 {
     $postManager = new PostManager();
     $commentManager = new CommentManager();
+    $userManager = new UserManager();
+    $avatar = $userManager->getAvatar($_GET['id']);
     $post = $postManager->getPost($_GET['id']);
     $comments = $commentManager->getComments($_GET['id']);
     require('view/frontend/postView.php');
+}
+
+function reportComment($id, $post_id)
+{
+    $commentManager = new CommentManager();
+    $affectedLines = $commentManager->signalComment($id);
+
+    if ($affectedLines == false)
+    :
+        throw new Exception ('Impossible de signaler le commentaire');
+    else:
+        header('Location: index.php?action=post&id=' . $post_id);
+    endif;
 }
 
 function displayModifyPost()
@@ -126,12 +133,11 @@ function updatePost($id, $title, $post)
     
 
     if ($affectedLines == false)
-    {
+    :
         throw new Exception ('Impossible de modifier le contenu');
-    }
-    else {
+    else :
         header('Location: index.php?action=admin');
-    }
+    endif;
 }
 
 function adminPosts()
@@ -148,12 +154,11 @@ function removePost($id)
     $affectedLines = $postManager->deletePost($id);
 
     if ($affectedLines == false)
-    {
+    :
         throw new Exception ('Impossible de supprimer cet article');
-    }
-    else {
+    else :
         header('Location: index.php?action=admin');
-    }
+    endif;
 }
 
 function addComment($post_id, $id_author, $comment)
@@ -161,12 +166,11 @@ function addComment($post_id, $id_author, $comment)
     $commentManager = new CommentManager();
     $affectedLines = $commentManager->postComment($post_id, $_SESSION['id'], $comment);
 
-    if ($affectedLines == false) {
+    if ($affectedLines == false) :
         throw new Exception('Impossible d\'ajouter le commentaire !');
-    }
-    else {
+    else :
         header('Location: index.php?action=post&id=' . $post_id);
-    }
+    endif;
 }
 
 function afficheCommentaires()
@@ -188,64 +192,61 @@ function uploadFile()
     $fichier = $_SESSION['id'] . $extension;
 
     if(!in_array($extension, $extensions))
-    {
+    :
         $erreur = 'Vous devez uploader un fichier de type png, gif, jpg, jpeg, txt ou doc...';
-    }
+    endif;
 
     if($taille>$taille_maxi)
-        {
+        :
             $erreur = 'Le fichier est trop gros...';
-        }
+    endif;
 
-    if(!isset($erreur))
-    {
+    if(!isset($erreur)) :
         $fichier = strtr($fichier, 
             'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 
             'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
         $fichier = preg_replace('/([^.a-z0-9]+)/i', '-', $fichier);
+    endif;
 
-        if(move_uploaded_file($_FILES['avatar']['tmp_name'], $dossier . $fichier))
-            {
-                echo 'Upload effectué avec succès !';
-                $membreid = $_SESSION['id'];
-                $fichier_avatar = $dossier . $fichier;
-                $userManager = new UserManager();
-                $result = $userManager->addAvatar($membreid, $fichier_avatar);
-                if($result == false) {
-                    throw new Exception('problème survenu lors de l\'envoi');
-                }
-                else {
-                    //redirection vers page du profil ou refresh pour afficher avatar
-                }
-                
-            }
-            else
-            {
+    if(move_uploaded_file($_FILES['avatar']['tmp_name'], $dossier . $fichier)) :
+
+        $membreid = $_SESSION['id'];
+        $fichier_avatar = $dossier . $fichier;
+        $userManager = new UserManager();
+        $result = $userManager->addAvatar($membreid, $fichier_avatar);
+            if($result == false) :
+                throw new Exception('problème survenu lors de l\'envoi');
+            else :
+                header('Location: index.php?action=displayAvatar');
+            endif;
+            else :
                 throw new Exception ('Echec de l\'upload !');
-            }
-    }
+            endif;
 }
 
 function afficheAvatar() 
 {
-    
+    $userManager = new UserManager();
+    $avatar = $userManager->getAvatar($_SESSION['id']);
+    $name = $userManager->getName($_SESSION['id']);
     require('view/frontend/uploadView.php');
 }
 
-function pagination()
+function listPosts()
 {
     $postManager = new PostManager();
-    $count = $postManager->countPosts();
+    $nbCount = $postManager->countPosts($_GET['id_rubrique']);
+    $count = $nbCount->fetch()['COUNT(id)'];
+    $perPage = 2;
+    $countPages = ceil($count / 2);
 
-    $currentPage = (int)($_GET['page']);
-    if ($currentPage <= 0) {
-        throw new Exception ('Numéro de page invalide');
-    }
-
-    $pages = ceil($count / 2);
-    if ($currentPage > $pages) {
-        throw new Exception ('Cette page n\'existe pas');
-    }
-
+    if (isset($_GET['page']) && $_GET['page'] > 0 && $_GET['page'] <= $countPages) :
+        $currentPage = intval($_GET['page']);
+    else :
+        $currentPage = 1;
+    endif;
+    $start = ($currentPage - 1) * $perPage;
+    $posts = $postManager->getPosts($_GET['id_rubrique'], $start, $perPage);
+    
     require('view/frontend/listPostView.php');
 }

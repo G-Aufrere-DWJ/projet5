@@ -1,13 +1,13 @@
 <?php ob_start(); ?>
 
         <div id="article_seul">
-            <h3>
+            <h3 class="text-center my-5">
                 <?php echo $post->title; ?>
                 <em>le <?= $post->creation_date ?></em>
             </h3>
             <div class="container bg-white col-12">
                 <div class="row">
-                        <div id="whole_chapter" class="col-lg-6">
+                        <div id="whole_chapter" class="col-lg-6 text-white px-5 mx-auto">
                             <p>
                                 <?= ($post->content) ?>
                             </p>
@@ -26,6 +26,7 @@
                             while ($comment = $comments->fetch())
                                 {
                                 ?>
+                            <img src="<?= $comment['avatar'] ?>">
                             <p id="whose_comment" class="text-capitalize"><strong><?= htmlspecialchars($comment['pseudo']) ?></strong> le <?= $comment['creation_date'] ?></p>
                             <p id="content_comment"><?= nl2br(htmlspecialchars($comment['comment'])) ?></p>
 
@@ -43,7 +44,7 @@
         <section id="leave_comment">
             <div class="container bg-white col-12">
                 <div class="row">
-                    <div id="form_comments" class="text-center col-lg-6 mb-5 mt-5">
+                    <div id="form_comments" class="text-center col-lg-6 my-5 mx-auto">
                 <?php if (isset($_SESSION['id'])) {
                     if (!empty($_SESSION['id']) && ($_SESSION['role'] > 0 )) { ?>
                             <form action="index.php?action=addComment&id=<?= $post->id ?>" method="post">

@@ -29,7 +29,7 @@
 <nav class="navbar navbar-expand-lg bg-primary navbar-dark fixed-top" id="mainNav">
     <div class="container">
             <a class="navbar-brand" href="index.php?action=home">Bourges</a>
-            <button type="button" id="btn_meteo" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            <button type="button" id="btn_meteo" class="btn text-white" data-toggle="modal" data-target="#exampleModalCenter">
                 Météo
             </button>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,13 +42,13 @@
                 <a class="nav-link" href="index.php?action=home">Accueil</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.php?action=listPost&id_rubrique=1">Culture</a>
+                <a class="nav-link" href="index.php?action=listPost&id_rubrique=<?= $data['id'] ?>"><?= $data['libelle'] ?></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.php?action=listPost&id_rubrique=2">Sport</a>
+                <a class="nav-link" href="index.php?action=listPost&id_rubrique=<?= $data['id'] ?>"><?= $data['libelle'] ?></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.php?action=listPost&id_rubrique=3">Environnement</a>
+                <a class="nav-link" href="index.php?action=listPost&id_rubrique=<?= $data['id'] ?>"><?= $data['libelle'] ?></a>
             </li>
             <li class="nav-item">
             <?php if (!isset($_SESSION['id'])) { ?>
@@ -83,7 +83,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Météo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

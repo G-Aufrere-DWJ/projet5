@@ -14,8 +14,8 @@
                 <div id="titre_article_seul" class="col text-black text-center pb-2 mt-4">
                     <?= ($data['title']) ?>
                 </div>
-                <a href="index.php?action=displayGestionArticle&id=<?= ($data['id'])?>" class="btn btn-success">Modifier l'article</a>
-                <a href="index.php?action=deletePost&id=<?= ($data['id'])?>" class="btn btn-danger">Supprimer l'article</a>
+                <a href="index.php?action=displayGestionArticle&id=<?= ($data['id'])?>" class="btn btn-success" id="btn_success_modify">Modifier l'article</a>
+                <a href="index.php?action=deletePost&id=<?= ($data['id'])?>" class="btn btn-danger" id="btn_success_delete">Supprimer l'article</a>
                 <?php
                 }
                 ?>
