@@ -9,10 +9,12 @@
 } 
 ?>
 
-<form method="POST" action="index.php?action=upload" enctype="multipart/form-data" class="col-lg-6 text-center mx-auto">
+<form method="POST" action="index.php?action=upload" enctype="multipart/form-data" class="col-lg-6 text-center mx-auto" id="form_avatar">
     <div class="form-group">
         <input type="hidden" name="MAX_FILE_SIZE" value="100000">
         Ajouter avatar : <input type="file" name="avatar">
+        <p>Extensions acceptées : png, gif, jpg, jpeg, txt ou doc</p>
+        <p>Taille max : 100 ko</p>
         <br />
         <br />
         <input type="submit" name="envoyer" value="Envoyer le fichier" class="btn btn-success">

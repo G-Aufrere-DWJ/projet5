@@ -5,7 +5,7 @@
             <h2 class="text-white text-center">COMMENTAIRES A MODERER</h2>
                 <div class="container bg-white col-12 pb-5">
                     <div class="row">
-                        <div id="signal_comments" class="col-6">
+                        <div id="signal_comments" class="col-6 text-center mx-auto">
                         <?php
                             while ($comment = $comments->fetch())
                         {

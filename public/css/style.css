@@ -552,5 +552,31 @@ hr.limite_post:after {
 
 #red_btn_comments {
     background-color: rgba(221, 16, 16, 0.726);
-    ;
+}
+
+
+
+@media screen and (max-width: 430px) {
+
+    .login-box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 270px;
+        padding: 40px;
+        transform: translate(-50%, -50%);
+        background: #4e5353;
+        box-sizing: border-box;
+        box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+        border-radius: 10px;
+    }
+
+    .flip-box-header {
+        font-size: 29px;
+    }
+
+    #change_avatar img {
+        width: 160px;
+        height: 160px;
+    }
 }

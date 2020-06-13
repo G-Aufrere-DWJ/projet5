@@ -1,12 +1,10 @@
 <?php ob_start(); ?>
 
-
-
 <div id="container_articles">
     <h2 class="text-black text-center pb-5">GESTION DES ARTICLES</h2>
     <div class="container col-12">
         <div class="row">
-            <div id="article_form_gestion" class="col-lg-6 mb-5">
+            <div id="article_form_gestion" class="col-lg-6 mb-5 mx-auto text-center">
             <?php
             while ($data = $posts->fetch())
             {

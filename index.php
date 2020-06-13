@@ -186,6 +186,16 @@ try {
                     throw new Exception('Vous n\'avez pas l\'autorisation requise');
                 }
             }
+            elseif ($_GET['action'] == 'takeOffComment') {
+                if(isset($_SESSION['role'])){
+                    if ($_SESSION['role'] == 0) {
+                        pullOutComment($_GET['id'], $_GET['post_id']);
+                    }
+                    else {
+                        throw new Exception('Vous n\'avez pas l\'autorisation requise');
+                    }
+                }
+            }
             elseif ($_GET['action'] == 'displayAvatar') {
                         afficheAvatar();
                 }
@@ -197,7 +207,8 @@ try {
         afficheHome();
     }
     } // fin du try
-catch(Exception $e) { // S'il y a eu une erreur, alors...
+catch(Exception $e) {
+    //$_SESSION['error'] = $e->getMessage();
     $errorMessage = $e->getMessage();
     require('view/frontend/errorView.php');
 }

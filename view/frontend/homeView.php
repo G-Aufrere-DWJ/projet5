@@ -41,9 +41,9 @@
     <img class="mb-5" src="public/img/arrow_bottom.svg" alt="fleche_bas">
 </div>
 
-<?php $data = $rubrique->fetch(); ?>
-    <div class="box-container col-8 mx-auto">
 
+    <div class="box-container col-lg-8 col-xl-10 mx-auto">
+    <?php while($data = $rubrique2->fetch()) { ?>
 	<div class="box-item">
     <div class="flip-box">
         <div class="flip-box-front text-center" style="background-image: url('<?= $data['img'] ?>');">
@@ -64,52 +64,7 @@
         </div>
     </div>
 	</div>
-
-    <?php $data = $rubrique->fetch(); ?>
-    <div class="box-item">
-    <div class="flip-box">
-        <div class="flip-box-front text-center filter-" style="background-image: url('<?= $data['img'] ?>');">
-        <div class="inner color-white">
-            <h3 class="flip-box-header"> <?= $data['libelle'] ?> </h3>
-            <p> <?= $data['texte'] ?> </p>
-            <img src="https://s25.postimg.cc/65hsttv9b/cta-arrow.png" alt="" class="flip-box-img">
-        </div>
-        </div>
-        <div class="flip-box-back text-center" style="background-image: url('<?= $data['img'] ?>');">
-        <div class="inner color-white">
-            <h3 class="flip-box-header"> <?= $data['libelle'] ?> </h3>
-            <p> <?= $data['texte'] ?> </p>
-            <form action="index.php?action=listPost&id_rubrique=<?= $data['id'] ?>" method="post">
-                <button class="flip-box-button" type="submit">En savoir plus</button>
-            </form>
-        </div>
-        </div>
-    </div>
-	</div>
-    
-    <?php $data = $rubrique->fetch(); ?>
-	<div class="box-item">
-    <div class="flip-box">
-        <div class="flip-box-front text-center" style="background-image: url('<?= $data['img'] ?>');">
-        <div class="inner color-white">
-            <h3 class="flip-box-header"> <?= $data['libelle'] ?> </h3>
-            <p> <?= $data['texte'] ?> </p>
-            <img src="https://s25.postimg.cc/65hsttv9b/cta-arrow.png" alt="" class="flip-box-img">
-        </div>
-        </div>
-        <div class="flip-box-back text-center" style="background-image: url('<?= $data['img'] ?>');">
-        <div class="inner color-white">
-            <h3 class="flip-box-header"> <?= $data['libelle'] ?> </h3>
-            <p> <?= $data['texte'] ?> </p>
-            <form action="index.php?action=listPost&id_rubrique= <?= $data['id'] ?> " method="post">
-                <button class="flip-box-button" type="submit">En savoir plus</button>
-            </form>
-        </div>
-        </div>
-    </div>
-	</div>
-
-	
+    <?php } ?>
 </div>
 
 </section>

@@ -9,6 +9,7 @@ use Guillaume\model\CommentManager;
 function afficheHome()
 {
     $postManager = new PostManager();
+    $rubrique2 = $postManager->getRubriques();
     $rubrique = $postManager->getRubriques();
 
     require('view/frontend/homeView.php');
@@ -17,6 +18,8 @@ function afficheHome()
 function addUser($pseudo, $password)
 {
     $userManager = new UserManager();
+    $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
 
     if ($userManager->checkPseudo($pseudo)):
         $success = $userManager->insertUser($pseudo, $password);
@@ -33,12 +36,16 @@ function addUser($pseudo, $password)
 
 function afficheInscription()
 {
+    $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
     require('view/frontend/registrationView.php');
 }
 
 function connection($pseudo, $password)
 {   
     $userManager = new UserManager();
+    $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
     $req = $userManager->userExists($pseudo);
     
     if ($req === false) :
@@ -61,11 +68,15 @@ function connection($pseudo, $password)
 
 function afficheConnexion()
 {
+    $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
     require('view/frontend/connectView.php');
 }
 
 function disconnect()
 {
+    $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
     $_SESSION = array();
     session_destroy();
     header('Location: index.php?action=home');
@@ -73,12 +84,15 @@ function disconnect()
 
 function afficheAdmin()
 {
+    $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
     require('view/frontend/adminView.php');
 }
 
 function newPost($title, $content, $id_rubrique)
 {
     $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
     $affectedLines = $postManager->addPost($title, $content, $id_rubrique);
 
     if ($affectedLines == false) :
@@ -91,6 +105,8 @@ function newPost($title, $content, $id_rubrique)
 
 function writeArticle()
 {
+    $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
     require('view/frontend/newPostView.php');
 }
 
@@ -99,6 +115,7 @@ function post()
     $postManager = new PostManager();
     $commentManager = new CommentManager();
     $userManager = new UserManager();
+    $rubrique = $postManager->getRubriques();
     $avatar = $userManager->getAvatar($_GET['id']);
     $post = $postManager->getPost($_GET['id']);
     $comments = $commentManager->getComments($_GET['id']);
@@ -107,6 +124,8 @@ function post()
 
 function reportComment($id, $post_id)
 {
+    $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
     $commentManager = new CommentManager();
     $affectedLines = $commentManager->signalComment($id);
 
@@ -121,6 +140,7 @@ function reportComment($id, $post_id)
 function displayModifyPost()
 {
     $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
     $post = $postManager->getPost($_GET['id']);
 
     require('view/frontend/gestionOnePostView.php');
@@ -129,6 +149,7 @@ function displayModifyPost()
 function updatePost($id, $title, $post)
 {
     $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
     $affectedLines = $postManager->modifyPost($id, $title, $post);
     
 
@@ -136,13 +157,14 @@ function updatePost($id, $title, $post)
     :
         throw new Exception ('Impossible de modifier le contenu');
     else :
-        header('Location: index.php?action=admin');
+        header('Location: index.php?action=gestionArticles');
     endif;
 }
 
 function adminPosts()
 {
     $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
     $posts = $postManager->getPostsAdmin();
 
     require('view/frontend/gestionPostsView.php');
@@ -151,6 +173,7 @@ function adminPosts()
 function removePost($id)
 {
     $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
     $affectedLines = $postManager->deletePost($id);
 
     if ($affectedLines == false)
@@ -164,6 +187,8 @@ function removePost($id)
 function addComment($post_id, $id_author, $comment)
 {
     $commentManager = new CommentManager();
+    $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
     $affectedLines = $commentManager->postComment($post_id, $_SESSION['id'], $comment);
 
     if ($affectedLines == false) :
@@ -173,9 +198,39 @@ function addComment($post_id, $id_author, $comment)
     endif;
 }
 
+function pullOutComment($id, $post_id)
+{
+    $commentManager = new CommentManager();
+    $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
+    $affectedLines = $commentManager->ignoreComment($id);
+
+    if ($affectedLines == false) :
+        throw new Exception ('Impossible de retirer le signalement');
+    else :
+        header('Location: index.php?action=listSignalComments');
+    endif;
+}
+
+function removeComment($id, $post_id)
+{
+    $commentManager = new CommentManager();
+    $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
+    $affectedLines = $commentManager->deleteComment($id);
+
+    if ($affectedLines == false) :
+        throw new Exception ('Impossible de supprimer le commentaire');
+    else :
+        header('Location: index.php?action=listSignalComments');
+    endif;
+}
+
 function afficheCommentaires()
 {
     $commentManager = new CommentManager();
+    $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
     $comments = $commentManager->getSignalComments();
     
     require('view/frontend/listSignalCommentsView.php');
@@ -183,6 +238,9 @@ function afficheCommentaires()
 
 function uploadFile()
 {
+    $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
+
     $dossier = 'public/upload/';
     $fichier = basename($_FILES['avatar']['name']);
     $taille_maxi = 100000;
@@ -198,7 +256,7 @@ function uploadFile()
 
     if($taille>$taille_maxi)
         :
-            $erreur = 'Le fichier est trop gros...';
+        $erreur = 'Le fichier est trop gros...';
     endif;
 
     if(!isset($erreur)) :
@@ -220,13 +278,15 @@ function uploadFile()
                 header('Location: index.php?action=displayAvatar');
             endif;
             else :
-                throw new Exception ('Echec de l\'upload !');
+                throw new Exception ('Echec de l\'upload, vérifiez l\'extension ou la taille du fichier');
             endif;
 }
 
 function afficheAvatar() 
 {
     $userManager = new UserManager();
+    $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
     $avatar = $userManager->getAvatar($_SESSION['id']);
     $name = $userManager->getName($_SESSION['id']);
     require('view/frontend/uploadView.php');
@@ -235,6 +295,7 @@ function afficheAvatar()
 function listPosts()
 {
     $postManager = new PostManager();
+    $rubrique = $postManager->getRubriques();
     $nbCount = $postManager->countPosts($_GET['id_rubrique']);
     $count = $nbCount->fetch()['COUNT(id)'];
     $perPage = 2;

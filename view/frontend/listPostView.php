@@ -11,7 +11,7 @@ while ($data = $posts->fetch())
     $texte = substr($data['content'], 0, 200).'...';
 ?>
 
-<div class="card mb-5 col-6 text-center mx-auto">
+<div class="card mb-5 col-lg-6 text-center mx-auto">
     <h3 class="card-header"> <?= $data['title'] ?> </h3>
     <div class="card-body">
         <p class="card-text"> <?= $texte ?> </p>
@@ -24,12 +24,9 @@ while ($data = $posts->fetch())
 }
 ?>
 <div id="pagination" class="text-center">
-    <?php for($i = 1; $i<=$countPages; $i++) {
-        ?>
+    <?php for($i = 1; $i<=$countPages; $i++) { ?>
         <a href="index.php?action=listPost&id_rubrique=<?= $_GET['id_rubrique']?>&page=<?= $i?>" class="btn btn-secondary mb-2"> <?=$i?> </a> 
-        <?php 
-    }
-    ?>
+    <?php } ?>
 </div>
 <?php
 $posts->closeCursor();
